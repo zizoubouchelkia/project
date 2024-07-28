@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_estat_property,access_estat_property,real_estat_ads.model_estat_property,base.group_user,1,1,1,1
+access_estat_property_type,access_estat_property_type,real_estat_ads.model_estat_property_type,base.group_user,1,1,1,1
+access_estat_property_tag,access_estat_property_tag,real_estat_ads.model_estat_property_tag,base.group_user,1,1,1,1
+access_estat_property_offer,access_estat_property_offer,real_estat_ads.model_estat_property_offer,base.group_user,1,1,1,1

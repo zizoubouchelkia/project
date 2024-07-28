@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="estat_property_offer_tree_view" model="ir.ui.view">
+            <field name="name">estat.property.offer.tree</field>
+            <field name="model">estat.property.offer</field>
+            <field name="arch" type="xml">
+                <tree decoration-success="status == 'accepted'"
+                      decoration-danger="status == 'refused'">
+                    <field name="price"/>
+                    <field name="status"/>
+                    <field name="partner_id"/>
+                    <field name="property_id"/>
+                    <field name="create_date"/>
+                    <field name="validity"/>
+                    <field name="deadline"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="estat_property_offer_form_view" model="ir.ui.view">
+            <field name="name">estat.property.offer.form</field>
+            <field name="model">estat.property.offer</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="price"/>
+                                <field name="status"/>
+                                <field name="partner_id"/>
+                                <field name="property_id"/>
+                            </group>
+                            <group>
+                                <field name="create_date"/>
+                                <field name="validity"/>
+                                <field name="deadline"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_property_offer" model="ir.actions.act_window">
+            <field name="name">Property offers</field>
+            <field name="res_model">estat.property.offer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="estat_property_offer_tree_view"/>
+        </record>
+
+        <record id="action_extend_offer_deadline" model="ir.actions.server">
+            <field name="name">Extend Deadline</field>
+            <field name="model_id" ref="real_estat_ads.model_estat_property_offer"/>
+            <field name="state">code</field>
+            <field name="binding_model_id" ref="real_estat_ads.model_estat_property_offer"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="code">
+                action=model.extend_offer_deadline()
+            </field>
+        </record>
+
+    </data>
+</odoo>
