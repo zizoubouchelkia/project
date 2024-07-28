@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_library_borrow_form" model="ir.ui.view">
+            <field name="name">library.borrow.form</field>
+            <field name="model">library.borrow</field>
+            <field name="arch" type="xml">
+                <form string="Borrow Record">
+                    <header>
+                        <button name="action_borrowed" type="object" string="Borrowed"
+                                class="btn btn-primary o_status_borrowed"/>
+                        <button name="action_returned" type="object" string="Returned"
+                                class="btn btn-success o_status_returned"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="book_id"/>
+                            <field name="member_id"/>
+                            <field name="borrow_date"/>
+                            <field name="return_date" placeholder="max 25 days"/>
+                            <field name="days_count" attrs="{'invisible':[('return_date', '=' ,False)]}"/>
+                            <field name="state"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_library_borrow_tree" model="ir.ui.view">
+            <field name="name">library.borrow.tree</field>
+            <field name="model">library.borrow</field>
+            <field name="arch" type="xml">
+                <tree string="Library Borrow Records">
+                    <field name="book_id"/>
+                    <field name="member_id"/>
+                    <field name="borrow_date"/>
+                    <field name="return_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_library_borrow" model="ir.actions.act_window">
+            <field name="name">Library Borrow Records</field>
+            <field name="res_model">library.borrow</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

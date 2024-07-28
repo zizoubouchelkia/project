@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_library_book_topic_form" model="ir.ui.view">
+            <field name="name">library.book.topic.form</field>
+            <field name="model">library.book.topic</field>
+            <field name="arch" type="xml">
+                <form string="Topic">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_library_book_topic_tree" model="ir.ui.view">
+            <field name="name">library.book.topic.tree</field>
+            <field name="model">library.book.topic</field>
+            <field name="arch" type="xml">
+                <tree string="Topics">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_library_book_topic" model="ir.actions.act_window">
+            <field name="name">Topics</field>
+            <field name="res_model">library.book.topic</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+/* static/src/css/library_borrow.css */
+
+.o_status_borrowed {
+    background-color: #007bff; /* Primary blue */
+    border-color: #007bff;
+}
+
+.o_status_returned {
+    background-color: #28a745; /* Success green */
+    border-color: #28a745;
+}
+
+.btn.barrowed {
+    background-color: #ff7f7f; /* Light red for borrowed */
+    border-color: #ff7f7f;
+}
+
+.btn.returned {
+    background-color: #7fff7f; /* Light green for returned */
+    border-color: #7fff7f;
+}

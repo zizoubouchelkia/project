@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="menu_library_root" name="Library" sequence="10" web_icon="library,static\description\livre.png"/>
+
+    <menuitem id="menu_library_book" name="Book" parent="menu_library_root" sequence="10"/>
+    <menuitem id="menu_library_all_books" name="All Books" parent="menu_library_book" sequence="10"
+              action="action_library_book"/>
+    <menuitem id="menu_library_book_topic" name="Topic" parent="menu_library_book" sequence="10"
+              action="action_library_book_topic"/>
+
+
+    <menuitem id="menu_library_member" name="Member" parent="menu_library_root" sequence="20"/>
+    <menuitem id="menu_library_all_members" name="All Members" parent="menu_library_member" sequence="10"
+              action="action_library_member"/>
+
+    <menuitem id="menu_library_author" name="Author" parent="menu_library_root" sequence="10"/>
+    <menuitem id="menu_library_all_authors" name="All Authors" parent="menu_library_author" sequence="10"
+              action="library.action_library_authors"/>
+
+    <menuitem id="menu_library_borrow" name="Borrow" parent="menu_library_root" sequence="10"/>
+    <menuitem id="menu_library_all_borrowing" name="Borrowing Records" parent="menu_library_borrow" sequence="10"
+              action="library.action_library_borrow"/>
+
+</odoo>

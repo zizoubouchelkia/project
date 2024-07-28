@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Library Book Form View -->
+        <record id="view_library_book_form" model="ir.ui.view">
+            <field name="name">library.book.form</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_reserved" type="object" string="Reserved" class="btn btn-primary"/>
+                        <button name="action_lost" type="object" string="Lost" class="btn btn-danger"/>
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <!-- Button for Author Action -->
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(library.action_library_authors)d" type="action" class="oe_stat_button"
+                                    icon="fa-user">
+                                <field name="author_id" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <!-- Cover Image -->
+                        <div>
+                            <field name="cover_image" widget="image" class="oe_avatar"
+                                   options="{'preview_image': 'cover_image'}"/>
+                        </div>
+                        <group>
+                            <!-- Basic Information -->
+                            <field name="name" widget="char_emojis" placeholder="📚 Title"/>
+                            <field name="genre_ids" widget="many2many_tags" options="{'color_field':'color'}"
+                                   placeholder="🗂️ Topic"/>
+                            <group>
+                                <field name="author_id"/>
+                                <field name="isbn"/>
+                            </group>
+                            <group>
+                                <field name="publication_date"/>
+                                <field name="copy_count"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <!-- Book Details Page -->
+                            <page string="Book Details">
+                                <group>
+                                    <field name="language"/>
+                                    <field name="other_language"
+                                           attrs="{'invisible':[('language', '!=' ,'other')]}"
+                                           placeholder="🌍 Other language" widget="char"/>
+                                    <field name="pages"/>
+                                    <field name="price"/>
+                                    <field name="publisher"/>
+                                    <field name="status"/>
+                                </group>
+
+                                <group>
+                                    <field name="age_label" string="Age" readonly="1"/>
+                                    <field name="times_borrowed" readonly="1"/>
+                                </group>
+                            </page>
+                            <page string="Borrow Records">
+                                <field name="borrow_ids">
+                                    <tree string="Borrow Records">
+                                        <field name="member_id"/>
+                                        <field name="borrow_date"/>
+                                        <field name="return_date"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_library_book_tree" model="ir.ui.view">
+            <field name="name">library.book.tree</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <tree string="Library Books">
+                    <field name="name"/>
+                    <field name="author_id"/>
+                    <field name="isbn"/>
+                    <field name="copy_count" string="Copies"/>
+                    <field name="age_label" string="Age" readonly="1"/>
+                    <field name="status" widget="badge" options="{'color_field':'color'}"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Enhanced Search View for Library Book -->
+        <record id="view_library_book_search" model="ir.ui.view">
+            <field name="name">library.book.search</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <search string="Library Books">
+                    <!-- Basic Search Fields -->
+                    <field name="name" string="Title"/>
+                    <field name="author_id" string="Author"/>
+                    <field name="isbn" string="ISBN"/>
+                    <field name="publication_date" string="Publication Date"
+                           filter_domain="[('publication_date','>=',self)]"/>
+
+                    <!-- Additional Filters -->
+                    <filter name="genre_ids" string="Genre" domain="[('genre_ids', '>=', self)]"/>
+                    <filter name="filter_price_range" string="Price Range">
+                        <field name="price" filter_domain="[('price', '>=', self)]"/>
+                    </filter>
+
+                    <!-- Advanced Search -->
+                    <filter name="advanced_search" string="Advanced Search">
+                        <field name="name" string="Title"/>
+                        <field name="author_id" string="Author"/>
+                        <field name="isbn" string="ISBN"/>
+                        <field name="genre_ids" string="Genres"/>
+                        <field name="publication_date" string="Publication Date"/>
+                        <field name="price" string="Price"/>
+                    </filter>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Author" name="group_by_author" context="{'group_by':'author_id'}"/>
+                        <filter string="Genre" name="group_by_genre" context="{'group_by':'genre_ids'}"/>
+                        <filter string="Publication Date" name="group_by_publication_date"
+                                context="{'group_by':'publication_date'}"/>
+                    </group>
+                    <searchpanel>
+                        <field name="author_id" icon="fa_user" group_by="author_id"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_library_book_calendar" model="ir.ui.view">
+            <field name="name">library.book.calendar</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <calendar string="Library Books Calendar" date_start="publication_date">
+                    <field name="name"/>
+                    <field name="author_id"/>
+                    <field name="isbn"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="view_library_book_kanban" model="ir.ui.view">
+            <field name="name">library.book.kanban</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <kanban string="Library Books">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+                                    <div>
+                                        <field name="author_id"/>
+                                        <div>
+                                            <field name="isbn"/>
+                                        </div>
+                                        <field name="status" widget="badge" options="{'color_field':'color'}"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_footer">
+                                    <field name="age_label"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record id="action_library_book" model="ir.actions.act_window">
+            <field name="name">Library Books</field>
+            <field name="res_model">library.book</field>
+            <field name="view_mode">tree,form,calendar,kanban</field>
+        </record>
+    </data>
+</odoo>
